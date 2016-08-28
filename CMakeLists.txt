@@ -1,1 +1,14 @@
-include_directories(${i3ipc-doodle_SOURCE_DIR}/libs/streamlib)
+set(SRCS ${SRCS} "${CMAKE_CURRENT_SOURCE_DIR}/notify_stream.cpp" PARENT_SCOPE)
+set(INCDIRS ${INCDIRS} ${CMAKE_CURRENT_SOURCE_DIR} PARENT_SCOPE)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
+#{{{LIBNOTIFY
+
+# The popup notification will always be visible and will not be detected by IPC_DOODLE so viewing it does not create more output.
+	find_package(LIBNOTIFY REQUIRED)
+	find_package(GLIB2 REQUIRED)
+	find_package(GDK_PIXBUF2 REQUIRED)
+
+	set(LIBS ${LIBS} ${GDK_PIXBUF2_LIBRARIES} ${GLIB2_LIBRARIES} ${NOTIFY_LIBRARIES} PARENT_SCOPE)
+	set(INCDIRS_SYS ${INCDIRS_SYS} ${NOTIFY_INCLUDE_DIRS} ${GLIB2_INCLUDE_DIRS} ${GDK_PIXBUF2_INCLUDE_DIRS} PARENT_SCOPE)
+#}}}
